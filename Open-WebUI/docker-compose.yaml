@@ -1,0 +1,29 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    volumes:
+      - ../ollama-models/:/root/.ollama/models
+    networks:
+      - webui
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    environment:
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      USE_OLLAMA_DOCKER: true
+    volumes:
+      - open-webui:/app/backend/data
+    ports:
+      - 3000:8080
+    restart: unless-stopped
+    networks:
+      - webui
+
+volumes:
+  open-webui:
+    driver: local
+
+networks:
+  webui:

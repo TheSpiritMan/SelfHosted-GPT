@@ -1,0 +1,6 @@
+services:
+  ollama-only:
+    image: ollama/ollama:latest
+    container_name: ollama-only
+    volumes:
+      - ./ollama-models/:/root/.ollama/models
